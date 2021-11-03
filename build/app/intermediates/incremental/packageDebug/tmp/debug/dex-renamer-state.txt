@@ -1,4 +1,4 @@
-#Mon Nov 01 15:48:30 BRT 2021
+#Wed Nov 03 10:31:38 BRT 2021
 base.0=/Users/jeancamargo/Developer/Alura/Flutter/bytebank/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
