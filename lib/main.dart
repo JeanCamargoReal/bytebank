@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -34,44 +32,62 @@ class FormularioTransferencia extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: _controladorCampoNumeroConta,
-                style: TextStyle(fontSize: 24.0),
-                decoration: InputDecoration(
-                    labelText: 'Número da conta', hintText: '0000'),
-                keyboardType: TextInputType.number,
-              ),
+            Editor(
+              controlador: _controladorCampoNumeroConta,
+              dica: '0000',
+              rotulo: 'Numero da conta',
             ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: _controladorCampoValor,
-                style: TextStyle(fontSize: 24.0),
-                decoration: InputDecoration(
-                    icon: Icon(Icons.monetization_on),
-                    labelText: 'Valor',
-                    hintText: '0.00'),
-                keyboardType: TextInputType.number,
-              ),
+            Editor(
+              controlador: _controladorCampoValor,
+              rotulo: 'Valor',
+              dica: '0.00',
+              icone: Icons.monetization_on,
             ),
             ElevatedButton(
-                onPressed: () {
-                  debugPrint("Botão pressionado");
-                  final int? numeroConta =
-                      int.tryParse(_controladorCampoNumeroConta.text);
-                  final double? valor =
-                      double.tryParse(_controladorCampoValor.text);
-                  if (numeroConta != null && valor != null) {
-                    final trasferenciaCriada =
-                        Transferencia(valor, numeroConta);
-                    debugPrint('$trasferenciaCriada');
-                  }
-                },
-                child: Text('Confirmar'))
+                onPressed: () => _criaTransferencia(), child: Text('Confirmar'))
           ],
         ));
+  }
+
+  void _criaTransferencia() {
+    final int? numeroConta = int.tryParse(_controladorCampoNumeroConta.text);
+    final double? valor = double.tryParse(_controladorCampoValor.text);
+    if (numeroConta != null && valor != null) {
+      final trasferenciaCriada = Transferencia(valor, numeroConta);
+      debugPrint('$trasferenciaCriada');
+    }
+  }
+}
+
+class Editor extends StatelessWidget {
+  final TextEditingController controlador;
+  final String? rotulo;
+  final String? dica;
+  final IconData? icone;
+
+  const Editor({
+    Key? key,
+    required this.controlador,
+    this.rotulo,
+    this.dica,
+    this.icone,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: TextField(
+        controller: controlador,
+        style: TextStyle(fontSize: 24.0),
+        decoration: InputDecoration(
+          icon: icone != null ? Icon(icone) : null,
+          labelText: rotulo,
+          hintText: dica,
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
   }
 }
 
