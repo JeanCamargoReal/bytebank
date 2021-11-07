@@ -121,7 +121,11 @@ class ListaTranferencias extends StatelessWidget {
           future.then((transferenciaRecebida) {
             debugPrint('chegou no then do future');
             debugPrint('$transferenciaRecebida');
-            _transferencias.add(transferenciaRecebida!);
+            if (transferenciaRecebida != null) {
+              _transferencias.add(transferenciaRecebida);
+            } else {
+              debugPrint("Transferência vazia");
+            }
           });
         },
       ),
